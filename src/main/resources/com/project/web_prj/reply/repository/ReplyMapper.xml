@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.web_prj.reply.repository.ReplyMapper">
+
+    <resultMap id="replyMap" type="com.project.web_prj.reply.domain.Reply">
+        <result property="replyNo" column="reply_no" />
+        <result property="replyText" column="reply_text" />
+        <result property="replyWriter" column="reply_writer" />
+        <result property="replyDate" column="reply_date" />
+        <result property="boardNo" column="board_no" />
+    </resultMap>
+
+<!--    <insert id="save">-->
+<!--        INSERT INTO tbl_reply-->
+<!--            (reply_no, reply_text, reply_writer, board_no, account)-->
+<!--        VALUES-->
+<!--            (seq_tbl_reply.nextval, #{replyText}, #{replyWriter}, #{boardNo}, #{account})-->
+<!--    </insert>-->
+
+    <insert id="save">
+        INSERT INTO tbl_reply
+        (reply_text, reply_writer, board_no, account)
+        VALUES
+        (#{replyText}, #{replyWriter}, #{boardNo}, #{account})
+    </insert>
+
+    <!--  댓글 수정  -->
+    <update id="modify">
+        UPDATE tbl_reply
+        SET reply_text = #{replyText}
+        WHERE reply_no = #{replyNo}
+    </update>
+
+    <!--  댓글 삭제  -->
+    <delete id="remove">
+        DELETE FROM tbl_reply
+        WHERE reply_no = #{replyNo}
+    </delete>
+
+    <!--  댓글 전체 삭제  -->
+    <delete id="removeAll">
+        DELETE FROM tbl_reply
+        WHERE board_no = #{boardNo}
+    </delete>
+
+    <!--  댓글 개별조회  -->
+    <select id="findOne" resultMap="replyMap">
+        SELECT * FROM tbl_reply
+        WHERE reply_no = #{replyNo}
+    </select>
+
+    <!--  댓글 목록 조회  -->
+<!--    <select id="findAll" resultMap="replyMap">-->
+<!--        SELECT  *-->
+<!--        FROM (-->
+<!--            SELECT ROWNUM rn, v_reply.*-->
+<!--            FROM (-->
+<!--                SELECT *-->
+<!--                FROM tbl_reply-->
+<!--                WHERE board_no = #{boardNo}-->
+<!--                ORDER BY reply_no-->
+<!--            ) v_reply-->
+<!--        )-->
+<!--        WHERE rn BETWEEN (#{page.pageNum} - 1) * #{page.amount} + 1 AND (#{page.pageNum} * #{page.amount})-->
+<!--    </select>-->
+
+    <!--  댓글 목록 조회  -->
+    <select id="findAll" resultMap="replyMap">
+        SELECT  *
+        FROM tbl_reply
+        WHERE board_no = #{boardNo}
+        ORDER BY reply_no
+        LIMIT #{page.start}, #{page.amount}
+    </select>
+
+    <select id="getReplyCount" resultType="int">
+        SELECT COUNT(*)
+        FROM tbl_reply
+        WHERE board_no=#{boardNo}
+    </select>
+
+</mapper>

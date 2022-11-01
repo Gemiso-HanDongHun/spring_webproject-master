@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.web_prj.board.repository.BoardMapper">
+
+    <resultMap id="boardMap" type="com.project.web_prj.board.domain.Board">
+        <result property="boardNo" column="board_no" />
+        <result property="regDate" column="reg_date" />
+        <result property="viewCnt" column="view_cnt" />
+    </resultMap>
+
+<!--    <insert id="save">-->
+<!--        INSERT INTO tbl_board-->
+<!--        (board_no, writer, title, content, account)-->
+<!--        VALUES (seq_tbl_board.nextval, #{writer}, #{title}, #{content}, #{account})-->
+<!--    </insert>-->
+
+    <insert id="save">
+        INSERT INTO tbl_board
+         (writer, title, content, account)
+        VALUES (#{writer}, #{title}, #{content}, #{account})
+    </insert>
+
+<!--    <select id="findAll" resultMap="boardMap">-->
+<!--        SELECT  *-->
+<!--        FROM (SELECT ROWNUM rn, v_board.*-->
+<!--              FROM (-->
+<!--                        SELECT *-->
+<!--                        FROM tbl_board-->
+<!--                        ORDER BY board_no DESC-->
+<!--                        ) v_board)-->
+<!--        WHERE rn BETWEEN (#{pageNum} - 1) * #{amount} + 1 AND (#{pageNum} * #{amount})-->
+<!--    </select>-->
+
+    <select id="findAll" resultMap="boardMap">
+        SELECT  *
+        FROM tbl_board
+        ORDER BY board_no DESC
+        LIMIT (#{pageNum} - 1) * #{amount}, (#{pageNum} * #{amount})
+    </select>
+
+
+
+
+<!--    <select id="findAll2" resultMap="boardMap">-->
+<!--        SELECT  *-->
+<!--        FROM (-->
+<!--                SELECT ROWNUM rn, v_board.*-->
+<!--                FROM (-->
+<!--                        SELECT *-->
+<!--                        FROM tbl_board-->
+<!--                        <if test="type == 'title'">WHERE title LIKE '%' || #{keyword} || '%'</if>-->
+<!--                        <if test="type == 'writer'">WHERE writer LIKE '%' || #{keyword} || '%'</if>-->
+<!--                        <if test="type == 'content'">WHERE content LIKE '%' || #{keyword} || '%'</if>-->
+<!--                        <if test="type == 'tc'">-->
+<!--                            WHERE title LIKE '%' || #{keyword} || '%'-->
+<!--                                OR content LIKE '%' || #{keyword} || '%'-->
+<!--                        </if>-->
+<!--                        ORDER BY board_no DESC-->
+<!--                        ) v_board-->
+<!--              )-->
+<!--        WHERE rn BETWEEN (#{pageNum} - 1) * #{amount} + 1 AND (#{pageNum} * #{amount})-->
+<!--    </select>-->
+
+
+    <select id="findAll2" resultMap="boardMap">
+        SELECT  *
+        FROM tbl_board
+        <include refid="search" />
+        ORDER BY board_no DESC
+        LIMIT #{start}, #{amount}
+    </select>
+
+    <sql id="search">
+        <if test="type == 'title'">WHERE title LIKE CONCAT('%', #{keyword}, '%')</if>
+        <if test="type == 'writer'">WHERE writer LIKE CONCAT('%', #{keyword}, '%')</if>
+        <if test="type == 'content'">WHERE content LIKE CONCAT('%', #{keyword}, '%')</if>
+        <if test="type == 'tc'">
+            WHERE title LIKE CONCAT('%', #{keyword}, '%')
+            OR content LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+    </sql>
+
+
+    <select id="findOne" resultMap="boardMap">
+        SELECT * FROM tbl_board
+        WHERE board_no=#{boardNo}
+    </select>
+
+    <delete id="remove">
+        DELETE FROM tbl_board
+        WHERE board_no=#{boardNo}
+    </delete>
+
+    <update id="modify">
+        UPDATE tbl_board
+        SET writer = #{writer}, title=#{title}, content=#{content}
+        WHERE board_no=#{boardNo}
+    </update>
+
+    <select id="getTotalCount" resultType="int">
+        SELECT COUNT(*)
+        FROM tbl_board
+    </select>
+
+    <select id="getTotalCount2" resultType="int">
+        SELECT COUNT(*)
+        FROM tbl_board
+        <include refid="search" />
+    </select>
+
+    <update id="upViewCount">
+        UPDATE tbl_board
+        SET view_cnt = view_cnt + 1
+        WHERE board_no=#{boardNo}
+    </update>
+
+
+
+    <!--  첨부파일 추가  -->
+<!--    <insert id="addFile">-->
+
+<!--        INSERT INTO file_upload-->
+<!--            (file_name, bno)-->
+<!--        VALUES-->
+<!--            (#{fileName}, seq_tbl_board.currval)-->
+
+<!--    </insert>-->
+
+    <!--  첨부파일 추가  -->
+    <insert id="addFile">
+
+        INSERT INTO file_upload
+        (file_name, bno)
+        VALUES
+        (#{fileName}, last_insert_id())
+
+    </insert>
+
+    <select id="findFileNames" resultType="string">
+        SELECT file_name
+        FROM file_upload
+        WHERE bno = #{bno}
+    </select>
+
+    <select id="findMemberByBoardNo" resultType="com.project.web_prj.board.dto.ValidateMemberDTO">
+
+        SELECT account, auth
+        FROM tbl_member
+        WHERE account = (
+                            SELECT account
+                            FROM tbl_board
+                            WHERE board_no = #{boardNo}
+                        )
+
+    </select>
+
+</mapper>
