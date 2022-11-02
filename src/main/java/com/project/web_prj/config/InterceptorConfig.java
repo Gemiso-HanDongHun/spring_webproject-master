@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-// 다양한 인터셉터들을 관리하는 설정 클래스
-@Configuration
+// 다양한 인터셉터들을 관리하는 설정 클래스   --> 인터셉터를 등록하는 페키지가 필요하여 interceptor 패키지를 생성해준다
+@Configuration  // 이것으로 설정파일임을 알려준다
 @RequiredArgsConstructor
 public class InterceptorConfig implements WebMvcConfigurer {
 

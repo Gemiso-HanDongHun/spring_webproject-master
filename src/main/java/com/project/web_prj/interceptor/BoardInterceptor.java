@@ -22,8 +22,8 @@ import static com.project.web_prj.util.LoginUtils.*;
 @Log4j2
 public class BoardInterceptor implements HandlerInterceptor {
 
-    /*
-        인터셉터의 전처리 메서드.
+    /* 
+        인터셉터의 전처리 메서드.    <--- preHandle 설명
         리턴값이 true일 경우 컨트롤러 진입을 허용하고
         false일 경우 진입을 허용하지 않는다.
      */
@@ -36,7 +36,7 @@ public class BoardInterceptor implements HandlerInterceptor {
 //                = request.getRequestDispatcher("/WEB-INF/views/member/sign-in.jsp");
 
         log.info("board interceptor preHandle()");
-        if (!isLogin(session)) {
+        if (!isLogin(session)) {  // 로그인을 하지 않았다면
             log.info("this request deny!! 집에 가");
             // dispatcher.forward(request, response);
 

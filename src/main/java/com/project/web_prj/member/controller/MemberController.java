@@ -67,7 +67,6 @@ public class MemberController {
         String referer = request.getHeader("Referer");
         log.info("referer: {}", referer);
 
-
         request.getSession().setAttribute("redirectURI", referer);
 
         model.addAttribute("kakaoAppKey", KAKAO_APP_KEY);
@@ -75,7 +74,7 @@ public class MemberController {
     }
 
     // 로그인 요청 처리
-    @PostMapping("/sign-in")
+    @PostMapping("/sign-in")     // LoginDTO 대신 Member로 받아도 되지만, Member로 받게되면 너무 과하다. (안넘어도는 아이디도 있는데 모두 받아오게 된다)
     public String signIn(LoginDTO inputData
             , Model model
             , HttpSession session // 세션정보 객체
@@ -91,11 +90,13 @@ public class MemberController {
         if (flag == LoginFlag.SUCCESS) {
             log.info("login success!!");
             String redirectURI = (String) session.getAttribute("redirectURI");
-            return "redirect:" + redirectURI;
+            return "redirect:" + redirectURI;  // 세션에서 얻어온 정보를 가지고 그곳으로 redirect를 한다.   redirectURI 에는 referer가 있다.
         }
-        model.addAttribute("loginMsg", flag);
+        
+        model.addAttribute("loginMsg", flag);    // sign-in.jsp 113번에서 정의한다
         return "member/sign-in";
 
+        // 브라우저 하나당 세션이 한개이므로 브라우져를 종료시키면 세션도 종료가 된다
     }
 
     @GetMapping("/sign-out")
@@ -136,5 +137,4 @@ public class MemberController {
         }
         return "redirect:/member/sign-in";
     }
-
 }

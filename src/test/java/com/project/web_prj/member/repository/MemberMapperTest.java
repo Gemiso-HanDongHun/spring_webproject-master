@@ -25,7 +25,7 @@ class MemberMapperTest {
 
         Member m = new Member();
         m.setAccount("apple123");
-        m.setPassword("12345");
+        m.setPassword("12345");   // 이런식으로 비밀번호가 바로 보여지면 안되고 인코딩이 돼어야 한다
         m.setName("사과왕");
         m.setEmail("apple@gmail.com");
         m.setAuth(Auth.ADMIN);

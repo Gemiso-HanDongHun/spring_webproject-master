@@ -17,4 +17,8 @@ public class Member {
     private Date regDate;
     private String sessionId;
     private Date limitTime;
+
+
+    // 아이디 , 패스워드, AutoLogin 상태가 따로 빼두어서 관리하면 유지보수가 된다
+    // 그것이 LoginDTO.java 클래스 이다.
 }

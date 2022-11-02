@@ -79,7 +79,9 @@ public class MemberService {
                 }
 
 
-                return SUCCESS;
+                return SUCCESS;  // import static으로 되어있으므로 앞에 Login을 붙이지 않음
+                                //  import static com.project.web_prj.util.LoginUtils.*;  이 부분
+                
             } else {
                 // 비번 틀림
                 return NO_PW;

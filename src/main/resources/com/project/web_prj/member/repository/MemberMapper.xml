@@ -21,7 +21,7 @@
     <!-- 중복체크 기능 (아이디, 이메일)   -->
     <select id="isDuplicate" resultType="int">
 
-        SELECT COUNT(*)
+        SELECT COUNT(*)   -- count를 하게 되면 값이 1개가 나오므로 resultType이 int이다
         FROM tbl_member
         <if test="type=='account'">
             WHERE account = #{value}

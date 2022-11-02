@@ -3,6 +3,7 @@
 CREATE SEQUENCE seq_tbl_board;
 
 DROP TABLE tbl_board;
+
 CREATE TABLE tbl_board (
     board_no NUMBER(10),
     writer VARCHAR2(20) NOT NULL,
@@ -16,6 +17,7 @@ CREATE TABLE tbl_board (
 
 
 DROP TABLE tbl_board;
+
 CREATE TABLE tbl_board (
     board_no INT(10) AUTO_INCREMENT,
     writer VARCHAR(20) NOT NULL,

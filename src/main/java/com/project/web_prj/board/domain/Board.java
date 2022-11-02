@@ -20,7 +20,6 @@ public class Board {
     private Date regDate;
     private String account;
 
-
     // 커스텀 데이터 필드
     private String shortTitle; // 줄임 제목
     private String prettierDate; // 변경된 날짜포맷 문자열
@@ -28,8 +27,6 @@ public class Board {
     private int replyCount; // 댓글 수
 
     private List<String> fileNames; // 첨부파일들의 이름 목록
-
-
 
     public Board(ResultSet rs) throws SQLException {
         this.boardNo = rs.getLong("board_no");

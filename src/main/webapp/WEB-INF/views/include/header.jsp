@@ -13,6 +13,7 @@
             <c:if test="${loginUser != null}">
                 ${loginUser.name}님 Hello!!
             </c:if>
+
         </h2>
         <a href="#" class="menu-open">
             <span class="menu-txt">MENU</span>

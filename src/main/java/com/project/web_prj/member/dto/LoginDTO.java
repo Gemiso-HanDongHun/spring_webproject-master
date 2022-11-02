@@ -11,4 +11,6 @@ public class LoginDTO {
     private String account;
     private String password;
     private boolean autoLogin;
+    
+    // 유지보수 측면에서 뛰어나게 된다
 }
