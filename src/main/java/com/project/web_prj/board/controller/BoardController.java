@@ -109,7 +109,7 @@ public class BoardController {
         }*/
 
         // 현재 로그인 사용자 계정명 추가
-        board.setAccount(LoginUtils.getCurrentMemberAccount(session));
+        board.setAccount(LoginUtils.getCurrentMemberAccount(session));   // write Post
 
         boolean flag = boardService.saveService(board);
         // 게시물 등록에 성공하면 클라이언트에 성공메시지 전송
@@ -147,6 +147,7 @@ public class BoardController {
         model.addAttribute("board", board);
         model.addAttribute("validate", boardService.getMember(boardNo));
 
+        // postHandle을 거쳐서 가는데 검사를 하겠다는 뜻이다. (BoardInterceptor.java 51번째 줄)
         return "board/board-modify";
     }
 

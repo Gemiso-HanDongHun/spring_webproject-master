@@ -18,7 +18,7 @@ public class Board {
     private String content;
     private Long viewCnt;
     private Date regDate;
-    private String account;
+    private String account; // 컬럼이 추가되었으므로 domain에도 추가를 해야 한다
 
     // 커스텀 데이터 필드
     private String shortTitle; // 줄임 제목

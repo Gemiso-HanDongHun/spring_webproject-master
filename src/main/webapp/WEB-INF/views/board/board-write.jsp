@@ -48,7 +48,8 @@
                 <div class="mb-3">
                     <label for="writer-input" class="form-label">작성자</label>
                     <input type="text" class="form-control" id="writer-input" placeholder="이름" name="writer"
-                        maxlength="20" readonly value="${loginUser.name}">
+                        maxlength="20" readonly value="${loginUser.name}">    <%-- 강제로 로그인한 사람의 아이디가 적히게 된다 --%>
+
                 </div>
                 <div class="mb-3">
                     <label for="title-input" class="form-label">글제목</label>

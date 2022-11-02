@@ -19,7 +19,7 @@
 
     <insert id="save">
         INSERT INTO tbl_board
-         (writer, title, content, account)
+         (writer, title, content, account)    -- 여기에 추가로 계정(account)이 들어가야 한다
         VALUES (#{writer}, #{title}, #{content}, #{account})
     </insert>
 

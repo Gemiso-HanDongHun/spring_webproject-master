@@ -26,7 +26,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class BoardService {
 
-//    private final BoardRepository repository;
+    //    private final BoardRepository repository;
     private final BoardMapper boardMapper;
     private final ReplyMapper replyMapper;
 
@@ -202,7 +202,19 @@ public class BoardService {
 
     // 게시물 번호로 글쓴이 회원정보 가져오기
     public ValidateMemberDTO getMember(Long boardNo) {
-        return boardMapper.findMemberByBoardNo(boardNo);
+
+        // null이 발생하므로 return 주석 처리후 if문을 사용하여 member = null 이면 조건 부여.
+
+        ValidateMemberDTO member = boardMapper.findMemberByBoardNo(boardNo);
+
+        if (member == null) member = new ValidateMemberDTO();
+
+        return member;
+
+
+
+        //  return boardMapper.findMemberByBoardNo(boardNo);
+
     }
 
 }

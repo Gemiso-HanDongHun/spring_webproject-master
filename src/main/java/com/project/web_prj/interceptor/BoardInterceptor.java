@@ -82,8 +82,8 @@ public class BoardInterceptor implements HandlerInterceptor {
 
             if (isAdmin(session)) return;
 
-            if (!isMine(session, dto.getAccount())) {
-                response.sendRedirect("/board/list");
+            if (!isMine(session, dto.getAccount())) {  // 로그인한 계정과 현재 댓글 등록한 계정이 다르면 
+                response.sendRedirect("/board/list");  //  redirect를 반환한다(post)
             }
         }
     }

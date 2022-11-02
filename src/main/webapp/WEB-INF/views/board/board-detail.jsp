@@ -85,6 +85,7 @@
                     value="${b.title}" disabled>
             </div>
             <div class="mb-3">
+                <%--@declare id="exampleformcontroltextarea1"--%>
                 <label for="exampleFormControlTextarea1" class="form-label">내용</label>
 
                 <p class="main-content">
@@ -101,7 +102,7 @@
 
             <div class="btn-group btn-group-lg custom-btn-group" role="group">
 
-                <c:if test="${loginUser.account == b.account || loginUser.auth == 'ADMIN'}">
+                <c:if test="${loginUser.account == b.account || loginUser.auth == 'ADMIN'}">    <%-- 등록된 계정명과 로그인된 계정 명이 같으면 ~~~--%>
                     <button id="mod-btn" type="button" class="btn btn-warning">수정</button>
                     <button id="del-btn" type="button" class="btn btn-danger">삭제</button>
                 </c:if>
@@ -116,8 +117,8 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <c:if test="${empty loginUser}">
-                                <a href="/member/sign-in">댓글은 로그인 후 작성 가능합니다.</a>
+                            <c:if test="${empty loginUser}">  <%-- 105번이랑 동일한 표기법이다 --%>
+                                <a href="/member/sign-in">댓글은 로그인 후 작성 가능합니다.</a>  <%-- 로그인 문구와 함께 바로 로그인창으로 갈 수 있게 링크를 달아준다 --%>
                             </c:if>
 
                             <c:if test="${not empty loginUser}">
@@ -358,7 +359,7 @@
                         "       <div class='col-md-6'>" + rep.replyText + "</div>" +
                         "       <div class='offset-md-2 col-md-4 text-right'>";
 
-                    if (currentAccount === rep.account || auth === 'ADMIN') {
+                    if (currentAccount === rep.account || auth === 'ADMIN') {  // currentAccount를 전역변수로 생성하여 얻어내어 사용하고 있다 --> 251번에서 전역변수 지정
                         tag +=
                             "         <a id='replyModBtn' class='btn btn-sm btn-outline-dark' data-bs-toggle='modal' data-bs-target='#replyModifyModal'>수정</a>&nbsp;" +
                             "         <a id='replyDelBtn' class='btn btn-sm btn-outline-dark' href='#'>삭제</a>";
