@@ -17,8 +17,8 @@ ALTER TABLE tbl_reply ADD account VARCHAR(50) NOT NULL;   --  즉, 회원 한명
 
 SELECT * FROM tbl_member;
 
-ALTER TABLE tbl_member ADD session_id VARCHAR2(200) DEFAULT 'none';
-ALTER TABLE tbl_member ADD limit_time DATE;
+ALTER TABLE tbl_member ADD session_id VARCHAR(200) DEFAULT 'none';
+ALTER TABLE tbl_member ADD limit_time DATETIME;
 
 
 

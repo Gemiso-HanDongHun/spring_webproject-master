@@ -13,8 +13,10 @@
         }
 
     </style>
+
 </head>
 <body>
+
     <%@ include file="../include/header.jsp" %>
 
     <div class="container wrap">

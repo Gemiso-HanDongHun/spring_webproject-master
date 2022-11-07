@@ -31,7 +31,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
         // 자동 로그인 인터셉터 설정
         registry.addInterceptor(autoLoginInterceptor)
-                .addPathPatterns("/**");
+                .addPathPatterns("/**");  // 모든 경로에 대해서 들어와도 자동로그인을 시켜주겠다는 뜻
 
     }
 }

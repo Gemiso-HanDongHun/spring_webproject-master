@@ -73,7 +73,7 @@ public class MemberService {
                 session.setMaxInactiveInterval(60 * 60); // 1시간
 
                 // 자동 로그인 처리
-                if (inputData.isAutoLogin()) {
+                if (inputData.isAutoLogin()) { // getAutoLogin이 아닌 isAutoLogin
                     log.info("checked auto login user!!");
                     keepLogin(foundMember.getAccount(), session, response);
                 }
@@ -94,15 +94,19 @@ public class MemberService {
 
     // 자동 로그인 처리
     private void keepLogin(String account, HttpSession session, HttpServletResponse response) {
+
         // 1. 자동로그인 쿠키 생성 - 쿠키의 값으로 현재 세션의 아이디를 저장
         String sessionId = session.getId();
         Cookie c = new Cookie(LOGIN_COOKIE, sessionId);
+
         // 2. 쿠키 설정 (수명, 사용 경로)
         int limitTime = 60 * 60 * 24 * 90; // 90일에 대한 초
         c.setMaxAge(limitTime);
         c.setPath("/"); // 전체경로
+
         // 3. 로컬에 쿠키 전송
-        response.addCookie(c);
+        response.addCookie(c);      // 세션 하나당 고유의 쿠키 아이디를 가지고 있다. 세션을 종류 후에 다시 세션을 가동하면 아이디가 바뀐다
+                                    // 세션을 종류후에도 로그인이 유지되는 이유는 쿠키아이디가 바뀌지 않기 때문이다. 즉, 세션에 동일한 쿠키 아이디가 유지되므로 로그아웃이 되지 않음
 
         // 4. DB에 쿠키값과 수명 저장
         // 자동로그인 유지시간(초)을 날짜로 변환
@@ -121,10 +125,11 @@ public class MemberService {
         Cookie c = getAutoLoginCookie(request);
         if (c != null) {
             c.setMaxAge(0);
+            c.setPath("/");  // 이 부분을 설정해주지 않으면 자동로그인이 해제되지 않는다
             response.addCookie(c);
 
             //2. 데이터베이스 처리
-            AutoLoginDTO dto = new AutoLoginDTO(account, "none", new Date());
+            AutoLoginDTO dto = new AutoLoginDTO(account, "none", new Date());   // 자동 로그인을 위하여 세션 아이디를 none으로 바꾼다
             memberMapper.saveAutoLoginValue(dto);
         }
     }

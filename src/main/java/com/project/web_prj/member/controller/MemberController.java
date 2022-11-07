@@ -99,7 +99,7 @@ public class MemberController {
         // 브라우저 하나당 세션이 한개이므로 브라우져를 종료시키면 세션도 종료가 된다
     }
 
-    @GetMapping("/sign-out")
+    @GetMapping("/sign-out")   // 로그아웃
     public String signOut(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         HttpSession session = request.getSession();
@@ -107,14 +107,14 @@ public class MemberController {
         if (isLogin(session)) {
 
             // 만약 자동로그인 상태라면 해제한다.
-            if (hasAutoLoginCookie(request)) {
+            if (hasAutoLoginCookie(request)) {   // 자동 로그인 유무를 알 수 있게 쿠키를 알아본다
                 memberService.autoLogout(getCurrentMemberAccount(session), request, response);
             }
 
             // SNS로그인 상태라면 해당 SNS 로그아웃처리를 진행
             SNSLogin from = (SNSLogin) session.getAttribute(LOGIN_FROM);
 
-            if (from != null) {
+            if (from != null) {  // 로그인이 되어있으면 즉, null이 아니면
                 switch (from) {
                     case KAKAO:
                         kakaoService.logout((String) session.getAttribute("accessToken"));

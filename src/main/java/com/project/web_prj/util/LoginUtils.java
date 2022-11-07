@@ -32,7 +32,7 @@ public class LoginUtils {
 
     // 자동 로그인 쿠키 가져오기
     public static Cookie getAutoLoginCookie(HttpServletRequest request) {
-        return WebUtils.getCookie(request, LOGIN_COOKIE);
+        return WebUtils.getCookie(request, LOGIN_COOKIE);   // GetCookie를 하는데 AutoLoginCookie를 가져오라는 뜻
     }
 
     // 자동 로그인 쿠키가 있는지 여부 확인
